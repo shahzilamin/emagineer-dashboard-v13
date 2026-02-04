@@ -158,35 +158,35 @@ export function InsightsSummary({
   info: number;
 }) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center flex-wrap gap-2 sm:gap-4">
       {critical > 0 && (
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5">
           <div className="w-2 h-2 rounded-full bg-red-500" />
-          <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-            {critical} Critical
+          <span className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+            {critical} Crit
           </span>
         </div>
       )}
       {warning > 0 && (
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5">
           <div className="w-2 h-2 rounded-full bg-amber-500" />
-          <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-            {warning} Warning
+          <span className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+            {warning} Warn
           </span>
         </div>
       )}
       {success > 0 && (
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5">
           <div className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+          <span className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
             {success} Good
           </span>
         </div>
       )}
       {info > 0 && (
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5">
           <div className="w-2 h-2 rounded-full bg-blue-500" />
-          <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+          <span className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
             {info} Info
           </span>
         </div>

@@ -106,26 +106,26 @@ export function PortfolioDashboard() {
       </div>
 
       {/* Alerts Summary */}
-      <div className="flex items-center justify-between bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
+        <div className="flex items-center gap-3 sm:gap-4">
           <div className={clsx(
-            'p-3 rounded-xl',
+            'p-2 sm:p-3 rounded-xl flex-shrink-0',
             insightCounts.critical > 0 ? 'bg-red-100 dark:bg-red-900/30' : 'bg-slate-100 dark:bg-slate-700'
           )}>
             {insightCounts.critical > 0 ? (
-              <AlertCircle className="w-6 h-6 text-red-600" />
+              <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
             ) : (
-              <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+              <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
             )}
           </div>
           <div>
-            <h2 className="font-semibold text-slate-900 dark:text-white">
+            <h2 className="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">
               {insightCounts.critical > 0
                 ? `${insightCounts.critical} Critical Issue${insightCounts.critical > 1 ? 's' : ''}`
                 : 'All Systems Operational'}
             </h2>
-            <p className="text-sm text-slate-500">
-              {insightCounts.critical + insightCounts.warning} total items need attention
+            <p className="text-xs sm:text-sm text-slate-500">
+              {insightCounts.critical + insightCounts.warning} items need attention
             </p>
           </div>
         </div>

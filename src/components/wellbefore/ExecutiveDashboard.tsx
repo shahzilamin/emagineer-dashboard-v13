@@ -136,15 +136,15 @@ export function WellBeforeExecutiveDashboard() {
       </div>
 
       {/* Alerts Summary */}
-      <div className="flex items-center justify-between bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
-        <div className="flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-700">
-            <Target className="w-6 h-6 text-slate-600 dark:text-slate-300" />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="p-2 sm:p-3 rounded-xl bg-slate-100 dark:bg-slate-700 flex-shrink-0">
+            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600 dark:text-slate-300" />
           </div>
           <div>
-            <h2 className="font-semibold text-slate-900 dark:text-white">Action Items</h2>
-            <p className="text-sm text-slate-500">
-              {insightCounts.critical + insightCounts.warning} issues need your attention
+            <h2 className="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">Action Items</h2>
+            <p className="text-xs sm:text-sm text-slate-500">
+              {insightCounts.critical + insightCounts.warning} issues need attention
             </p>
           </div>
         </div>
