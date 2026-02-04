@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   Sun,
   Moon,
@@ -40,6 +40,29 @@ const timeRanges: { id: TimeRange; label: string }[] = [
 export function Header() {
   const { company, view, timeRange, darkMode, setCompany, setView, setTimeRange, toggleDarkMode } =
     useDashboard();
+
+  const [companyDropdownOpen, setCompanyDropdownOpen] = useState(false);
+  const [timeDropdownOpen, setTimeDropdownOpen] = useState(false);
+  const companyRef = useRef<HTMLDivElement>(null);
+  const timeRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (companyRef.current && !companyRef.current.contains(e.target as Node)) {
+        setCompanyDropdownOpen(false);
+      }
+      if (timeRef.current && !timeRef.current.contains(e.target as Node)) {
+        setTimeDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside as EventListener);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside as EventListener);
+    };
+  }, []);
 
   const currentCompany = companies.find((c) => c.id === company)!;
   const CompanyIcon = currentCompany.icon;
@@ -106,8 +129,14 @@ export function Header() {
             <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block" />
 
             {/* Company Selector */}
-            <div className="relative group">
-              <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <div className="relative" ref={companyRef}>
+              <button 
+                onClick={() => {
+                  setCompanyDropdownOpen(!companyDropdownOpen);
+                  setTimeDropdownOpen(false);
+                }}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
                 <CompanyIcon className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 <span className="font-medium text-slate-900 dark:text-white">
                   {currentCompany.name}
@@ -115,48 +144,53 @@ export function Header() {
                 <span className="hidden md:block text-xs text-slate-400">
                   {currentCompany.revenue}
                 </span>
-                <ChevronDown className="w-4 h-4 text-slate-400" />
+                <ChevronDown className={clsx("w-4 h-4 text-slate-400 transition-transform", companyDropdownOpen && "rotate-180")} />
               </button>
 
               {/* Dropdown */}
-              <div className="absolute left-0 top-full mt-1 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                {companies.map((c, i) => {
-                  const Icon = c.icon;
-                  return (
-                    <button
-                      key={c.id}
-                      onClick={() => setCompany(c.id)}
-                      className={clsx(
-                        'w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 first:rounded-t-lg last:rounded-b-lg transition-colors',
-                        company === c.id && 'bg-blue-50 dark:bg-blue-900/20'
-                      )}
-                    >
-                      <Icon
+              {companyDropdownOpen && (
+                <div className="absolute left-0 top-full mt-1 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-50">
+                  {companies.map((c, i) => {
+                    const Icon = c.icon;
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => {
+                          setCompany(c.id);
+                          setCompanyDropdownOpen(false);
+                        }}
                         className={clsx(
-                          'w-5 h-5',
-                          company === c.id
-                            ? 'text-blue-600 dark:text-blue-400'
-                            : 'text-slate-400'
+                          'w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 first:rounded-t-lg last:rounded-b-lg transition-colors',
+                          company === c.id && 'bg-blue-50 dark:bg-blue-900/20'
                         )}
-                      />
-                      <div className="text-left flex-1">
-                        <p
+                      >
+                        <Icon
                           className={clsx(
-                            'font-medium',
+                            'w-5 h-5',
                             company === c.id
                               ? 'text-blue-600 dark:text-blue-400'
-                              : 'text-slate-900 dark:text-white'
+                              : 'text-slate-400'
                           )}
-                        >
-                          {c.name}
-                        </p>
-                        <p className="text-xs text-slate-500">{c.revenue}</p>
-                      </div>
-                      <span className="text-xs text-slate-400 font-mono">{i + 1}</span>
-                    </button>
-                  );
-                })}
-              </div>
+                        />
+                        <div className="text-left flex-1">
+                          <p
+                            className={clsx(
+                              'font-medium',
+                              company === c.id
+                                ? 'text-blue-600 dark:text-blue-400'
+                                : 'text-slate-900 dark:text-white'
+                            )}
+                          >
+                            {c.name}
+                          </p>
+                          <p className="text-xs text-slate-500">{c.revenue}</p>
+                        </div>
+                        <span className="text-xs text-slate-400 font-mono">{i + 1}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
 
@@ -169,31 +203,42 @@ export function Header() {
             </div>
 
             {/* Time Range Selector */}
-            <div className="relative group">
-              <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-sm">
+            <div className="relative" ref={timeRef}>
+              <button 
+                onClick={() => {
+                  setTimeDropdownOpen(!timeDropdownOpen);
+                  setCompanyDropdownOpen(false);
+                }}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-sm"
+              >
                 <Calendar className="w-4 h-4 text-slate-500" />
                 <span className="hidden sm:block text-slate-700 dark:text-slate-300">
                   {timeRanges.find((t) => t.id === timeRange)?.label}
                 </span>
-                <ChevronDown className="w-4 h-4 text-slate-400" />
+                <ChevronDown className={clsx("w-4 h-4 text-slate-400 transition-transform", timeDropdownOpen && "rotate-180")} />
               </button>
 
-              <div className="absolute right-0 top-full mt-1 w-40 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                {timeRanges.map((t) => (
-                  <button
-                    key={t.id}
-                    onClick={() => setTimeRange(t.id)}
-                    className={clsx(
-                      'w-full text-left px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 first:rounded-t-lg last:rounded-b-lg transition-colors',
-                      timeRange === t.id
-                        ? 'text-blue-600 dark:text-blue-400 font-medium'
-                        : 'text-slate-700 dark:text-slate-300'
-                    )}
-                  >
-                    {t.label}
-                  </button>
-                ))}
-              </div>
+              {timeDropdownOpen && (
+                <div className="absolute right-0 top-full mt-1 w-40 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-50">
+                  {timeRanges.map((t) => (
+                    <button
+                      key={t.id}
+                      onClick={() => {
+                        setTimeRange(t.id);
+                        setTimeDropdownOpen(false);
+                      }}
+                      className={clsx(
+                        'w-full text-left px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 first:rounded-t-lg last:rounded-b-lg transition-colors',
+                        timeRange === t.id
+                          ? 'text-blue-600 dark:text-blue-400 font-medium'
+                          : 'text-slate-700 dark:text-slate-300'
+                      )}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* View Toggle */}

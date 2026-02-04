@@ -65,51 +65,51 @@ export function WellBeforeExecutiveDashboard() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-4 gap-6 mt-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mt-6">
           <div>
-            <p className="text-blue-200 text-sm">Today's Revenue</p>
-            <p className="text-3xl font-bold mt-1">{formatCurrency(metrics.revenue.today.current)}</p>
-            <div className="flex items-center gap-1 mt-1 text-sm">
+            <p className="text-blue-200 text-xs sm:text-sm">Today's Revenue</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1">{formatCurrency(metrics.revenue.today.current)}</p>
+            <div className="flex items-center gap-1 mt-1 text-xs sm:text-sm">
               {metrics.revenue.today.trend === 'up' ? (
-                <TrendingUp className="w-4 h-4 text-emerald-300" />
+                <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-300" />
               ) : (
-                <TrendingDown className="w-4 h-4 text-red-300" />
+                <TrendingDown className="w-3 h-3 sm:w-4 sm:h-4 text-red-300" />
               )}
               <span className={metrics.revenue.today.trend === 'up' ? 'text-emerald-300' : 'text-red-300'}>
                 {metrics.revenue.today.changePercent >= 0 ? '+' : ''}{metrics.revenue.today.changePercent.toFixed(1)}%
               </span>
-              <span className="text-blue-200">vs yesterday</span>
+              <span className="text-blue-200 hidden sm:inline">vs yesterday</span>
             </div>
           </div>
           <div>
-            <p className="text-blue-200 text-sm">MTD Progress</p>
-            <p className="text-3xl font-bold mt-1">{formatCurrency(metrics.revenue.mtd.current, true)}</p>
+            <p className="text-blue-200 text-xs sm:text-sm">MTD Progress</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1">{formatCurrency(metrics.revenue.mtd.current, true)}</p>
             <div className="mt-2">
-              <div className="w-full h-2 bg-blue-400/30 rounded-full overflow-hidden">
+              <div className="w-full h-1.5 sm:h-2 bg-blue-400/30 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-white rounded-full"
                   style={{ width: `${monthlyTargets.revenue.percentComplete}%` }}
                 />
               </div>
               <p className="text-xs text-blue-200 mt-1">
-                {monthlyTargets.revenue.percentComplete.toFixed(0)}% to {formatCurrency(monthlyTargets.revenue.target, true)} goal
+                {monthlyTargets.revenue.percentComplete.toFixed(0)}% to {formatCurrency(monthlyTargets.revenue.target, true)}
               </p>
             </div>
           </div>
           <div>
-            <p className="text-blue-200 text-sm">LTV:CAC Ratio</p>
-            <p className="text-3xl font-bold mt-1">{metrics.customers.ltvCacRatio.current.toFixed(1)}:1</p>
-            <p className="text-sm text-emerald-300 mt-1">Above 3:1 target</p>
+            <p className="text-blue-200 text-xs sm:text-sm">LTV:CAC Ratio</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1">{metrics.customers.ltvCacRatio.current.toFixed(1)}:1</p>
+            <p className="text-xs sm:text-sm text-emerald-300 mt-1">Above 3:1 target</p>
           </div>
           <div>
-            <p className="text-blue-200 text-sm">Gross Margin</p>
-            <p className="text-3xl font-bold mt-1">{formatPercentPlain(metrics.profitability.grossMargin.current)}</p>
-            <div className="flex items-center gap-1 mt-1 text-sm">
-              <TrendingDown className="w-4 h-4 text-amber-300" />
+            <p className="text-blue-200 text-xs sm:text-sm">Gross Margin</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1">{formatPercentPlain(metrics.profitability.grossMargin.current)}</p>
+            <div className="flex items-center gap-1 mt-1 text-xs sm:text-sm">
+              <TrendingDown className="w-3 h-3 sm:w-4 sm:h-4 text-amber-300" />
               <span className="text-amber-300">
                 {metrics.profitability.grossMargin.changePercent.toFixed(1)}%
               </span>
-              <span className="text-blue-200">from last month</span>
+              <span className="text-blue-200 hidden sm:inline">from last month</span>
             </div>
           </div>
         </div>
