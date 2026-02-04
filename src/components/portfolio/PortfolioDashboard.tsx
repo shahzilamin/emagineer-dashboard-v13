@@ -79,28 +79,28 @@ export function PortfolioDashboard() {
         </div>
 
         {/* Combined Stats */}
-        <div className="grid grid-cols-4 gap-6 mt-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mt-6">
           <div>
-            <p className="text-slate-400 text-sm">Today's Revenue</p>
-            <p className="text-3xl font-bold mt-1">{formatCurrency(combinedRevenue.today)}</p>
-            <p className="text-sm text-slate-400 mt-1">Combined both companies</p>
+            <p className="text-slate-400 text-xs sm:text-sm">Today's Revenue</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1">{formatCurrency(combinedRevenue.today)}</p>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">Combined</p>
           </div>
           <div>
-            <p className="text-slate-400 text-sm">MTD Revenue</p>
-            <p className="text-3xl font-bold mt-1">{formatCurrency(combinedRevenue.mtd, true)}</p>
-            <p className="text-sm text-emerald-400 mt-1">
+            <p className="text-slate-400 text-xs sm:text-sm">MTD Revenue</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1">{formatCurrency(combinedRevenue.mtd, true)}</p>
+            <p className="text-xs text-emerald-400 mt-1 hidden sm:block">
               WB: {formatCurrency(wbMetrics.revenue.mtd.current, true)} + D2C: {formatCurrency(d2cMetrics.revenue.mtd.current, true)}
             </p>
           </div>
           <div>
-            <p className="text-slate-400 text-sm">MTD Net Profit</p>
-            <p className="text-3xl font-bold mt-1 text-emerald-400">{formatCurrency(combinedProfit.mtd, true)}</p>
-            <p className="text-sm text-slate-400 mt-1">Combined margin</p>
+            <p className="text-slate-400 text-xs sm:text-sm">MTD Net Profit</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1 text-emerald-400">{formatCurrency(combinedProfit.mtd, true)}</p>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">Combined margin</p>
           </div>
           <div>
-            <p className="text-slate-400 text-sm">Cash Position</p>
-            <p className="text-3xl font-bold mt-1">{formatCurrency(combinedCash, true)}</p>
-            <p className="text-sm text-slate-400 mt-1">~{Math.round(combinedCash / (combinedProfit.mtd * 0.5))} months runway</p>
+            <p className="text-slate-400 text-xs sm:text-sm">Cash Position</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-1">{formatCurrency(combinedCash, true)}</p>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">~{Math.round(combinedCash / (combinedProfit.mtd * 0.5))}mo runway</p>
           </div>
         </div>
       </div>
@@ -320,47 +320,47 @@ export function PortfolioDashboard() {
           <DollarSign className="w-5 h-5 text-emerald-600" />
           Financial Summary (YTD)
         </h3>
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           <div className="text-center">
             <p className="text-xs text-slate-500 uppercase tracking-wide">YTD Revenue</p>
-            <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
+            <p className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
               {formatCurrency(combinedRevenue.ytd, true)}
             </p>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 mt-1 hidden sm:block">
               WB: {formatCurrency(wbMetrics.revenue.ytd.current, true)}
             </p>
-            <p className="text-sm text-slate-500">
+            <p className="text-xs text-slate-500 hidden sm:block">
               D2C: {formatCurrency(d2cMetrics.revenue.ytd.current, true)}
             </p>
           </div>
           <div className="text-center">
             <p className="text-xs text-slate-500 uppercase tracking-wide">Cash Position</p>
-            <p className="text-2xl font-bold text-emerald-600 mt-1">
+            <p className="text-lg sm:text-2xl font-bold text-emerald-600 mt-1">
               {formatCurrency(combinedCash, true)}
             </p>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 mt-1 hidden sm:block">
               WB: {formatCurrency(wbMetrics.profitability.cashPosition, true)}
             </p>
-            <p className="text-sm text-slate-500">
+            <p className="text-xs text-slate-500 hidden sm:block">
               D2C: {formatCurrency(350000, true)}
             </p>
           </div>
           <div className="text-center">
             <p className="text-xs text-slate-500 uppercase tracking-wide">Blended Margin</p>
-            <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
+            <p className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
               {formatPercentPlain(
                 (wbMetrics.profitability.grossMargin.current * 0.8 +
                   d2cMetrics.profitability.grossMargin.current * 0.2)
               )}
             </p>
-            <p className="text-sm text-slate-500 mt-1">Weighted by revenue</p>
+            <p className="text-xs text-slate-500 mt-1">Weighted</p>
           </div>
           <div className="text-center">
             <p className="text-xs text-slate-500 uppercase tracking-wide">Est. Runway</p>
-            <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
-              16+ months
+            <p className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
+              16+ mo
             </p>
-            <p className="text-sm text-emerald-600 mt-1">Healthy position</p>
+            <p className="text-xs text-emerald-600 mt-1">Healthy</p>
           </div>
         </div>
       </div>
