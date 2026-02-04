@@ -28,31 +28,31 @@ export function WellBeforeOperatorDashboard() {
   return (
     <div className="space-y-4">
       {/* Header with quick stats */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
             WellBefore Command Center
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             Last updated: {new Date().toLocaleTimeString()} • MTD: {((new Date().getDate() / 30) * 100).toFixed(0)}% through month
           </p>
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right">
             <p className="text-xs text-slate-500 uppercase tracking-wide">Cash Position</p>
-            <p className="text-lg font-bold text-slate-900 dark:text-white">
+            <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
               {formatCurrency(metrics.profitability.cashPosition, true)}
             </p>
           </div>
           <div className="text-right">
             <p className="text-xs text-slate-500 uppercase tracking-wide">Runway</p>
-            <p className="text-lg font-bold text-emerald-600">{metrics.profitability.runway} mo</p>
+            <p className="text-base sm:text-lg font-bold text-emerald-600">{metrics.profitability.runway} mo</p>
           </div>
         </div>
       </div>
 
       {/* Target Progress Bar */}
-      <div className="grid grid-cols-5 gap-4 p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 p-3 sm:p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
         <div>
           <ProgressBar
             current={monthlyTargets.revenue.current}
@@ -77,7 +77,7 @@ export function WellBeforeOperatorDashboard() {
           <ProgressBar
             current={monthlyTargets.newCustomers.current}
             target={monthlyTargets.newCustomers.target}
-            label="New Customers"
+            label="Customers"
           />
           <p className="text-xs text-slate-500 mt-1">
             {formatNumber(monthlyTargets.newCustomers.current)} / {formatNumber(monthlyTargets.newCustomers.target)}
@@ -87,17 +87,17 @@ export function WellBeforeOperatorDashboard() {
           <ProgressBar
             current={monthlyTargets.grossMargin.current}
             target={monthlyTargets.grossMargin.target}
-            label="Gross Margin"
+            label="Margin"
           />
           <p className="text-xs text-slate-500 mt-1">
             {monthlyTargets.grossMargin.current}% / {monthlyTargets.grossMargin.target}%
           </p>
         </div>
-        <div>
+        <div className="col-span-2 sm:col-span-1">
           <ProgressBar
             current={monthlyTargets.cac.target}
             target={monthlyTargets.cac.current}
-            label="CAC (Lower is Better)"
+            label="CAC"
           />
           <p className="text-xs text-slate-500 mt-1">
             ${monthlyTargets.cac.current} / ${monthlyTargets.cac.target} target
@@ -110,7 +110,7 @@ export function WellBeforeOperatorDashboard() {
         {/* Revenue Section */}
         <div className="col-span-12 lg:col-span-8 space-y-4">
           {/* Top metrics row */}
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <MetricCard
               title="Today's Revenue"
               value={metrics.revenue.today}
@@ -297,21 +297,21 @@ export function WellBeforeOperatorDashboard() {
         </div>
 
         {/* Inventory Alerts - Full Width */}
-        <div className="col-span-12 grid grid-cols-2 gap-4">
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Stockout Risk */}
           <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle className="w-5 h-5 text-amber-500" />
-              <h3 className="font-semibold text-slate-900 dark:text-white">Stockout Risk ({metrics.inventory.stockoutRisk.length})</h3>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">Stockout Risk ({metrics.inventory.stockoutRisk.length})</h3>
             </div>
             <InventoryTable items={metrics.inventory.stockoutRisk} type="stockout" />
           </div>
 
           {/* Dead Stock */}
           <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center flex-wrap gap-2 mb-3">
               <Package className="w-5 h-5 text-slate-400" />
-              <h3 className="font-semibold text-slate-900 dark:text-white">Dead Stock ({metrics.inventory.deadStock.length})</h3>
+              <h3 className="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">Dead Stock ({metrics.inventory.deadStock.length})</h3>
               <span className="text-xs text-slate-500">
                 {formatCurrency(metrics.inventory.deadStock.reduce((s, i) => s + i.value, 0), true)} tied up
               </span>
@@ -323,7 +323,7 @@ export function WellBeforeOperatorDashboard() {
         {/* Weekly Comparison */}
         <div className="col-span-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
           <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Period Comparison</h3>
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {['Revenue', 'Orders', 'AOV', 'Ad Spend', 'New Customers'].map((metric, i) => {
               const keys = ['revenue', 'orders', 'aov', 'adSpend', 'newCustomers'] as const;
               const key = keys[i];
@@ -335,13 +335,13 @@ export function WellBeforeOperatorDashboard() {
 
               return (
                 <div key={metric} className="text-center">
-                  <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">{metric}</p>
-                  <p className="text-lg font-bold text-slate-900 dark:text-white">
+                  <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">{metric === 'New Customers' ? 'New Cust' : metric}</p>
+                  <p className="text-sm sm:text-lg font-bold text-slate-900 dark:text-white">
                     {metric === 'Revenue' || metric === 'Ad Spend' || metric === 'AOV'
                       ? formatCurrency(thisWeek, true)
                       : formatNumber(thisWeek)}
                   </p>
-                  <div className="flex items-center justify-center gap-2 mt-1">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 mt-1">
                     <span className={clsx('text-xs font-medium', wowChange >= 0 ? 'text-emerald-600' : 'text-red-600')}>
                       {wowChange >= 0 ? '+' : ''}{wowChange.toFixed(1)}% WoW
                     </span>

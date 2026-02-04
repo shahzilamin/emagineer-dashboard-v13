@@ -60,31 +60,31 @@ export function D2CBuildersOperatorDashboard() {
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
             D2C Builders Command Center
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
             Last updated: {new Date().toLocaleTimeString()} • {metrics.clients.active} active clients
           </p>
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right">
             <p className="text-xs text-slate-500 uppercase tracking-wide">Warehouse Util</p>
-            <p className="text-lg font-bold text-slate-900 dark:text-white">
+            <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
               {formatPercentPlain(metrics.warehouse.utilization.current)}
             </p>
           </div>
           <div className="text-right">
-            <p className="text-xs text-slate-500 uppercase tracking-wide">Pallets Stored</p>
-            <p className="text-lg font-bold text-slate-900 dark:text-white">{metrics.warehouse.palletsStored}</p>
+            <p className="text-xs text-slate-500 uppercase tracking-wide">Pallets</p>
+            <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">{metrics.warehouse.palletsStored}</p>
           </div>
         </div>
       </div>
 
       {/* Target Progress */}
-      <div className="grid grid-cols-5 gap-4 p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 p-3 sm:p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
         <div>
           <ProgressBar
             current={monthlyTargets.revenue.current}
@@ -109,7 +109,7 @@ export function D2CBuildersOperatorDashboard() {
           <ProgressBar
             current={monthlyTargets.onTimeRate.current}
             target={monthlyTargets.onTimeRate.target}
-            label="On-Time Rate"
+            label="On-Time"
           />
           <p className="text-xs text-slate-500 mt-1">
             {monthlyTargets.onTimeRate.current}% / {monthlyTargets.onTimeRate.target}%
@@ -119,17 +119,17 @@ export function D2CBuildersOperatorDashboard() {
           <ProgressBar
             current={monthlyTargets.errorRate.target}
             target={monthlyTargets.errorRate.current}
-            label="Error Rate (Lower Better)"
+            label="Error Rate"
           />
           <p className="text-xs text-slate-500 mt-1">
-            {monthlyTargets.errorRate.current}% / {monthlyTargets.errorRate.target}% target
+            {monthlyTargets.errorRate.current}% / {monthlyTargets.errorRate.target}%
           </p>
         </div>
-        <div>
+        <div className="col-span-2 sm:col-span-1">
           <ProgressBar
             current={monthlyTargets.grossMargin.current}
             target={monthlyTargets.grossMargin.target}
-            label="Gross Margin"
+            label="Margin"
           />
           <p className="text-xs text-slate-500 mt-1">
             {monthlyTargets.grossMargin.current}% / {monthlyTargets.grossMargin.target}%
@@ -142,7 +142,7 @@ export function D2CBuildersOperatorDashboard() {
         {/* Left Column */}
         <div className="col-span-12 lg:col-span-8 space-y-4">
           {/* Top metrics */}
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <MetricCard
               title="Today's Revenue"
               value={metrics.revenue.today}
@@ -326,12 +326,12 @@ export function D2CBuildersOperatorDashboard() {
         </div>
 
         {/* Full Width - At Risk Clients & Pipeline */}
-        <div className="col-span-12 grid grid-cols-2 gap-4">
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Churn Risk Clients */}
           <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle className="w-5 h-5 text-amber-500" />
-              <h3 className="font-semibold text-slate-900 dark:text-white">
+              <h3 className="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">
                 At-Risk Clients ({churnRiskClients.length})
               </h3>
             </div>
@@ -403,8 +403,8 @@ export function D2CBuildersOperatorDashboard() {
 
         {/* Labor Efficiency Chart */}
         <div className="col-span-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-          <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Labor Efficiency by Day of Week</h3>
-          <div className="grid grid-cols-7 gap-2">
+          <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Labor Efficiency by Day</h3>
+          <div className="grid grid-cols-7 gap-1 sm:gap-2">
             {laborEfficiencyByDay.map((day) => {
               const isAboveTarget = day.ordersPerHour >= day.target;
               return (
