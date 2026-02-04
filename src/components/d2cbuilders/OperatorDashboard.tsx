@@ -83,9 +83,10 @@ export function D2CBuildersOperatorDashboard() {
         </div>
       </div>
 
-      {/* Target Progress */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 p-3 sm:p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
-        <div>
+      {/* Target Progress - scrollable on mobile */}
+      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-3 sm:p-4 overflow-x-auto">
+        <div className="flex lg:grid lg:grid-cols-5 gap-4 min-w-max lg:min-w-0">
+        <div className="min-w-[110px]">
           <ProgressBar
             current={monthlyTargets.revenue.current}
             target={monthlyTargets.revenue.target}
@@ -95,7 +96,7 @@ export function D2CBuildersOperatorDashboard() {
             {formatCurrency(monthlyTargets.revenue.current, true)} / {formatCurrency(monthlyTargets.revenue.target, true)}
           </p>
         </div>
-        <div>
+        <div className="min-w-[110px]">
           <ProgressBar
             current={monthlyTargets.orders.current}
             target={monthlyTargets.orders.target}
@@ -105,7 +106,7 @@ export function D2CBuildersOperatorDashboard() {
             {formatNumber(monthlyTargets.orders.current)} / {formatNumber(monthlyTargets.orders.target)}
           </p>
         </div>
-        <div>
+        <div className="min-w-[110px]">
           <ProgressBar
             current={monthlyTargets.onTimeRate.current}
             target={monthlyTargets.onTimeRate.target}
@@ -115,7 +116,7 @@ export function D2CBuildersOperatorDashboard() {
             {monthlyTargets.onTimeRate.current}% / {monthlyTargets.onTimeRate.target}%
           </p>
         </div>
-        <div>
+        <div className="min-w-[110px]">
           <ProgressBar
             current={monthlyTargets.errorRate.target}
             target={monthlyTargets.errorRate.current}
@@ -125,7 +126,7 @@ export function D2CBuildersOperatorDashboard() {
             {monthlyTargets.errorRate.current}% / {monthlyTargets.errorRate.target}%
           </p>
         </div>
-        <div className="col-span-2 sm:col-span-1">
+        <div className="min-w-[110px]">
           <ProgressBar
             current={monthlyTargets.grossMargin.current}
             target={monthlyTargets.grossMargin.target}
@@ -134,6 +135,7 @@ export function D2CBuildersOperatorDashboard() {
           <p className="text-xs text-slate-500 mt-1">
             {monthlyTargets.grossMargin.current}% / {monthlyTargets.grossMargin.target}%
           </p>
+        </div>
         </div>
       </div>
 

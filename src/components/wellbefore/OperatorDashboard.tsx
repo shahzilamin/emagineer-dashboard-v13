@@ -51,9 +51,10 @@ export function WellBeforeOperatorDashboard() {
         </div>
       </div>
 
-      {/* Target Progress Bar */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 p-3 sm:p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
-        <div>
+      {/* Target Progress Bar - scrollable on mobile */}
+      <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-3 sm:p-4 overflow-x-auto">
+        <div className="flex lg:grid lg:grid-cols-5 gap-4 min-w-max lg:min-w-0">
+        <div className="min-w-[120px]">
           <ProgressBar
             current={monthlyTargets.revenue.current}
             target={monthlyTargets.revenue.target}
@@ -63,7 +64,7 @@ export function WellBeforeOperatorDashboard() {
             {formatCurrency(monthlyTargets.revenue.current, true)} / {formatCurrency(monthlyTargets.revenue.target, true)}
           </p>
         </div>
-        <div>
+        <div className="min-w-[120px]">
           <ProgressBar
             current={monthlyTargets.orders.current}
             target={monthlyTargets.orders.target}
@@ -73,7 +74,7 @@ export function WellBeforeOperatorDashboard() {
             {formatNumber(monthlyTargets.orders.current)} / {formatNumber(monthlyTargets.orders.target)}
           </p>
         </div>
-        <div>
+        <div className="min-w-[120px]">
           <ProgressBar
             current={monthlyTargets.newCustomers.current}
             target={monthlyTargets.newCustomers.target}
@@ -83,7 +84,7 @@ export function WellBeforeOperatorDashboard() {
             {formatNumber(monthlyTargets.newCustomers.current)} / {formatNumber(monthlyTargets.newCustomers.target)}
           </p>
         </div>
-        <div>
+        <div className="min-w-[120px]">
           <ProgressBar
             current={monthlyTargets.grossMargin.current}
             target={monthlyTargets.grossMargin.target}
@@ -93,7 +94,7 @@ export function WellBeforeOperatorDashboard() {
             {monthlyTargets.grossMargin.current}% / {monthlyTargets.grossMargin.target}%
           </p>
         </div>
-        <div className="col-span-2 sm:col-span-1">
+        <div className="min-w-[120px]">
           <ProgressBar
             current={monthlyTargets.cac.target}
             target={monthlyTargets.cac.current}
@@ -102,6 +103,7 @@ export function WellBeforeOperatorDashboard() {
           <p className="text-xs text-slate-500 mt-1">
             ${monthlyTargets.cac.current} / ${monthlyTargets.cac.target} target
           </p>
+        </div>
         </div>
       </div>
 
@@ -321,9 +323,9 @@ export function WellBeforeOperatorDashboard() {
         </div>
 
         {/* Weekly Comparison */}
-        <div className="col-span-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+        <div className="col-span-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 overflow-x-auto">
           <h3 className="font-semibold text-slate-900 dark:text-white mb-4">Period Comparison</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+          <div className="flex lg:grid lg:grid-cols-5 gap-4 min-w-max lg:min-w-0">
             {['Revenue', 'Orders', 'AOV', 'Ad Spend', 'New Customers'].map((metric, i) => {
               const keys = ['revenue', 'orders', 'aov', 'adSpend', 'newCustomers'] as const;
               const key = keys[i];
@@ -334,7 +336,7 @@ export function WellBeforeOperatorDashboard() {
               const yoyChange = ((thisWeek - lastYear) / lastYear) * 100;
 
               return (
-                <div key={metric} className="text-center">
+                <div key={metric} className="text-center min-w-[80px]">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-1">{metric === 'New Customers' ? 'New Cust' : metric}</p>
                   <p className="text-sm sm:text-lg font-bold text-slate-900 dark:text-white">
                     {metric === 'Revenue' || metric === 'Ad Spend' || metric === 'AOV'
